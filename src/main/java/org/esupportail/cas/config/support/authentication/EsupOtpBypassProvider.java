@@ -15,8 +15,6 @@ import org.esupportail.cas.adaptors.esupotp.EsupOtpService;
 import org.esupportail.cas.config.EsupOtpConfigurationProperties;
 import org.esupportail.cas.configuration.model.support.mfa.EsupOtpMultifactorProperties;
 import org.json.JSONObject;
-import org.springframework.webflow.execution.RequestContext;
-import org.springframework.webflow.execution.RequestContextHolder;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -42,12 +40,7 @@ public class EsupOtpBypassProvider extends BaseMultifactorAuthenticationProvider
 			HttpServletRequest request) {
 		try {					
 			log.debug("mfa-esupotp bypass evaluation ...");		
-			final RequestContext context = RequestContextHolder.getRequestContext();
-			if(context == null) {
-				log.trace("Not in flow context");
-				return false;
-			} else {
-				final String uid = WebUtils.getAuthentication(context).getPrincipal().getId();
+				final String uid = authentication.getPrincipal().getId();
 	
 				JSONObject userInfos = esupOtpService.getUserInfos(uid);
 				List<EsupOtpMethod> listMethods = new ArrayList<EsupOtpMethod>();
@@ -60,15 +53,15 @@ public class EsupOtpBypassProvider extends BaseMultifactorAuthenticationProvider
 					}
 				}
 	
-				if ((esupOtpConfigurationProperties.getByPassIfNoEsupOtpMethodIsActive() || registeredService != null && esupOtpConfigurationProperties.getByPassServicesIfNoEsupOtpMethodIsActive().contains(registeredService.getId())) && esupOtpService.bypass(listMethods)) {
+				if (esupOtpConfigurationProperties.getByPassIfNoEsupOtpMethodIsActive() && esupOtpService.bypass(listMethods)) {
 					log.info(String.format("no method active for %s for service %s - mfa-esupotp bypass", uid, registeredService.getId()));
 					return false;
 				}
-			}
 		} catch (Exception e) {
 			log.error("Exception ...", e);
 			return false;
 		}
+		log.debug("no bypass");
 		return true;
 	}
 	

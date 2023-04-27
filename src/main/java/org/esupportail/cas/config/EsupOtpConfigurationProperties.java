@@ -33,8 +33,6 @@ public class EsupOtpConfigurationProperties extends BaseMultifactorAuthenticatio
 	
 	Boolean byPassIfNoEsupOtpMethodIsActive = true;
 	
-	List<Long> byPassServicesIfNoEsupOtpMethodIsActive = new ArrayList<Long>();
-	
 	Boolean trustedDeviceEnabled = true;
 	
 	Boolean isDeviceRegistrationRequired = false;
@@ -48,7 +46,6 @@ public class EsupOtpConfigurationProperties extends BaseMultifactorAuthenticatio
 		log.info("usersSecret : {}", usersSecret); 
 		log.info("apiPassword : {}", apiPassword);
 		log.info("byPassIfNoEsupOtpMethodIsActive : {}", byPassIfNoEsupOtpMethodIsActive);
-		log.info("byPassServicesIfNoEsupOtpMethodIsActive : {}", byPassServicesIfNoEsupOtpMethodIsActive);
 		log.info("trustedDeviceEnabled : {}", trustedDeviceEnabled);
 		log.info("isDeviceRegistrationRequired : {}", isDeviceRegistrationRequired);
 		log.info("deviceRegistrationExpirationInDays : {}", deviceRegistrationExpirationInDays);
