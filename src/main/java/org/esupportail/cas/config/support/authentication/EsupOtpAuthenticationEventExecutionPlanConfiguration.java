@@ -23,6 +23,8 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.ScopedProxyMode;
+
 /**
  * This is {@link EsupOtpAuthenticationEventExecutionPlanConfiguration}.
  *
@@ -86,7 +88,8 @@ public class EsupOtpAuthenticationEventExecutionPlanConfiguration {
 	}
 	
 	@Bean
-	@RefreshScope
+    @RefreshScope(proxyMode = ScopedProxyMode.DEFAULT)
+    @ConditionalOnMissingBean(name = "esupotpAuthenticationProvider")
 	public MultifactorAuthenticationProvider esupotpAuthenticationProvider() {
         final EsupOtpMultifactorProperties esupotp = esupotpMultifactorProperties();
         final EsupOtpMultifactorAuthenticationProvider p = new EsupOtpMultifactorAuthenticationProvider();
