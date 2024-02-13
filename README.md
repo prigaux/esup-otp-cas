@@ -14,12 +14,7 @@ esupotp.usersSecret=changeit
 esupotp.apiPassword=changeit
 esupotp.byPassIfNoEsupOtpMethodIsActive=false
 esupotp.trustedDeviceEnabled=true
-esupotp.isDeviceRegistrationRequired=false
-esupotp.deviceRegistrationExpirationInDays=7
 ```
-
-With esupotp.trustedDeviceEnabled=true, esupotp.isDeviceRegistrationRequired=false and esupotp.deviceRegistrationExpirationInDays=7
-we auto register device for MFA (and without form) during 7 days (trusted devices/browsers - hack on cas-server-support-trusted-mfa)
 
 In cas.properties
 
@@ -30,6 +25,13 @@ cas.authn.mfa.globalProviderId=mfa-esupotp
 # Add translations, you will need to check what are the default from CAS "Message Bundles" properties
 cas.messageBundle.baseNames=classpath:custom_messages,classpath:messages,classpath:esupotp_message
 ```
+If you want to trust devices for 7 days, you can add this in cas.properties
+```
+cas.authn.mfa.trusted.core.device-registration-enabled=true                                                                                                                                         
+cas.authn.mfa.trusted.core.auto-assign-device-name=true
+cas.authn.mfa.trusted.device-fingerprint.cookie.max-age=604800
+```
+with auto-assign-device-name, user will not have to choose a name for his device in a web form, it will be automatically assigned.  
 
 In esupotp.properties you can also use usual Multifactor Authentication Bypass configurations described here https://apereo.github.io/cas/6.3.x/mfa/Configuring-Multifactor-Authentication-Bypass.html
 

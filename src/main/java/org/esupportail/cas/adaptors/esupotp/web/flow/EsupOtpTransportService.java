@@ -29,7 +29,7 @@ public class EsupOtpTransportService {
     protected final transient Logger logger = LoggerFactory.getLogger(this.getClass());
     
     @Autowired
-    private EsupOtpConfigurationProperties esupOtpConfigurationProperties;
+    EsupOtpConfigurationProperties esupOtpConfigurationProperties;
     
 	public String sendCode(EsupOtpCredentialTransport transportCredential) {
         try {
@@ -41,7 +41,7 @@ public class EsupOtpTransportService {
         return "error";
 	}
 
-	private JSONObject sendCodeRequest(String uid, String userHash, String transport, String method) throws IOException, NoSuchAlgorithmException {
+	JSONObject sendCodeRequest(String uid, String userHash, String transport, String method) throws IOException, NoSuchAlgorithmException {
 		String url = esupOtpConfigurationProperties.getUrlApi() + "/users/" + uid + "/methods/" + method + "/transports/"+ transport + "/" + userHash;
 		URL obj = new URL(url);
 		HttpURLConnection con = null;

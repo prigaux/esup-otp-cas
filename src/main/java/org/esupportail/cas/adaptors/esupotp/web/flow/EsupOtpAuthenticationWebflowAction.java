@@ -19,10 +19,6 @@ public class EsupOtpAuthenticationWebflowAction extends AbstractAction {
         return this.esupotpAuthenticationWebflowEventResolver.resolveSingle(requestContext);
     }
 
-    public CasWebflowEventResolver getEsupOtpAuthenticationWebflowEventResolver() {
-        return esupotpAuthenticationWebflowEventResolver;
-    }
-
     public void setEsupOtpAuthenticationWebflowEventResolver(final CasWebflowEventResolver resolver) {
         this.esupotpAuthenticationWebflowEventResolver = resolver;
     }

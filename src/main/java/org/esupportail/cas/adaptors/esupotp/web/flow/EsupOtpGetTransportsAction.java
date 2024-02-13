@@ -30,7 +30,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class EsupOtpGetTransportsAction extends AbstractMultifactorAuthenticationAction<EsupOtpMultifactorAuthenticationProvider> {
 
-    private EsupOtpConfigurationProperties esupOtpConfigurationProperties;
+    EsupOtpConfigurationProperties esupOtpConfigurationProperties;
 
     EsupOtpService esupOtpService;
 

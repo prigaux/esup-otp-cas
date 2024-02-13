@@ -62,14 +62,7 @@ public class EsupOtpConfiguration {
 
 	@Autowired
 	private ConfigurableApplicationContext applicationContext;
-	
-    @Autowired
-    @Qualifier("defaultTicketFactory")
-    private ObjectProvider<TicketFactory> ticketFactory;
 
-    @Autowired
-    @Qualifier("authenticationEventExecutionPlan")
-    private ObjectProvider<AuthenticationEventExecutionPlan> authenticationEventExecutionPlan;
 
 	@Autowired
 	@Qualifier("loginFlowRegistry")
@@ -81,59 +74,6 @@ public class EsupOtpConfiguration {
     @Autowired
     @Qualifier("flowBuilder")
     private ObjectProvider<FlowBuilder> flowBuilder;
-
-	@Autowired
-	@Qualifier("centralAuthenticationService")
-	private CentralAuthenticationService centralAuthenticationService;
-
-	@Autowired
-	@Qualifier("defaultAuthenticationSystemSupport")
-	private AuthenticationSystemSupport authenticationSystemSupport;
-
-	@Autowired
-	@Qualifier("defaultTicketRegistrySupport")
-	private TicketRegistrySupport ticketRegistrySupport;
-
-	@Autowired
-	@Qualifier("servicesManager")
-	private ServicesManager servicesManager;
-
-    @Autowired
-    @Qualifier("singleSignOnParticipationStrategy")
-    private ObjectProvider<SingleSignOnParticipationStrategy> webflowSingleSignOnParticipationStrategy;
-
-    @Autowired
-    @Qualifier("registeredServiceAccessStrategyEnforcer")
-    private ObjectProvider<AuditableExecution> registeredServiceAccessStrategyEnforcer;
-
-
-    @Autowired
-    @Qualifier("authenticationServiceSelectionPlan")
-    private ObjectProvider<AuthenticationServiceSelectionPlan> authenticationRequestServiceSelectionStrategies;
-
-    @Autowired
-    @Qualifier("initialAuthenticationAttemptWebflowEventResolver")
-    private ObjectProvider<CasDelegatingWebflowEventResolver> initialAuthenticationAttemptWebflowEventResolver;
-
-    @Autowired
-    @Qualifier("authenticationContextValidator")
-    private ObjectProvider<MultifactorAuthenticationContextValidator> authenticationContextValidator;
-
-    @Autowired
-    @Qualifier("warnCookieGenerator")
-    private ObjectProvider<CasCookieBuilder> warnCookieGenerator;
-
-    @Autowired
-    @Qualifier("ticketRegistry")
-    private ObjectProvider<TicketRegistry> ticketRegistry;
-    
-    @Autowired
-    private ApplicationEventPublisher eventPublisher;
-    
-    @Autowired(required = false)
-    @Qualifier("multifactorAuthenticationProviderSelector")
-    private MultifactorAuthenticationProviderSelector multifactorAuthenticationProviderSelector =
-            new RankedMultifactorAuthenticationProviderSelector();
     
     @Autowired
     EsupOtpConfigurationProperties esupOtpConfigurationProperties;
@@ -194,8 +134,7 @@ public class EsupOtpConfiguration {
         @DependsOn({"defaultWebflowConfigurer", "esupotpMultifactorWebflowConfigurer"})
         public CasWebflowConfigurer esupotpMultifactorTrustWebflowConfigurer() {
         	log.debug("esupotp.trustedDeviceEnabled true, esupotpMultifactorTrustWebflowConfigurer ok");
-        	final AbstractCasWebflowConfigurer w =  new EsupOtpMultifactorTrustWebflowConfigurer(flowBuilderServices.getObject(), loginFlowDefinitionRegistry, 
-                esupOtpConfigurationProperties,
+        	final AbstractCasWebflowConfigurer w =  new EsupOtpMultifactorTrustWebflowConfigurer(flowBuilderServices.getObject(), loginFlowDefinitionRegistry,
                 esupotpFlowRegistry(),
                 applicationContext, casProperties, MultifactorAuthenticationWebflowUtils.getMultifactorAuthenticationWebflowCustomizers(applicationContext));
         	w.setOrder(WEBFLOW_CONFIGURER_ORDER + 1);
