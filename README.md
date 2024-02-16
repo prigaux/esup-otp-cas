@@ -1,4 +1,4 @@
-Works on CAS V6.6.15
+Works on CAS V7.0.1
 
 ## Config
 
